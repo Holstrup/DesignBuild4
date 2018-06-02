@@ -1,3 +1,11 @@
 
-
-client = MQTTClient("device_id", "io.adafruit.com",user="abho", password="bbd0c066695243c2b7d30dbc94614a94", port=1883)
+def do_connect():
+    import network
+    sta_if = network.WLAN(network.STA_IF)
+    if not sta_if.isconnected():
+        print('connecting to network...')
+        sta_if.active(True)
+        sta_if.connect('Weidekampsgade 37 5 tv', 'CPHPAATOPPEN')
+        while not sta_if.isconnected():
+            pass
+    print('network config:', sta_if.ifconfig())

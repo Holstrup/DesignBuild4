@@ -1,7 +1,6 @@
-import analogio
-#lightsensor is port A0
-lSens= analogio.AnalogIn(board.A0)
-
+import machine
+#lightsensor is port A0 gpio 26
+lSens = machine.ADC(machine.Pin(26))
 
 def sensor():
     client.connect()

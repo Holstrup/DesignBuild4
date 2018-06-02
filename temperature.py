@@ -1,8 +1,7 @@
 import math
-import board
-import analogio
-#adcT is port A1
-adcT= analogio.AnalogIn(board.A1)
+import machine
+#adcT is port A1 //GPIO 25
+adcT= machine.ADC(machine.Pin(25))
 T0=298.15
 B=3950
 #R0 the resistor.

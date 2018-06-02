@@ -3,9 +3,8 @@ import machine
 lSens = machine.ADC(machine.Pin(26))
 
 def sensor():
-    client.connect()
     intensity=lSens.read
-    client.subscribe(topic="abho/feeds/lightIntensity")
+    #client.subscribe(topic="abho/feeds/lightIntensity")
     client.publish(topic="abho/feeds/lightIntensity", msg= str(intensity))
 
 

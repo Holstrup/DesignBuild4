@@ -11,3 +11,13 @@ def Temp():
     R=R0/((4095/adcT.read())-1)
     T=(T0*B/(math.log(R/R0)*T0+B))-273.15
     return T
+
+
+#Should have a function in main, that calls this every x second/minute
+def sendTemp():
+    temp=Temp()
+    try:
+        client.publish(topic="abho/feeds/temperature", msg=str(temp))
+        print("DONE")
+    except Exception as e:
+        print("FAILED")

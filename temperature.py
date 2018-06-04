@@ -1,8 +1,8 @@
 import math
 import machine
 import time
-#adcT is port A3 //GPIO 36
-adcT= machine.ADC(machine.Pin(36))
+#adcT is port A3 //GPIO 39
+adcT= machine.ADC(machine.Pin(39))
 T0=298.15
 B=3950
 #R0 the resistor.

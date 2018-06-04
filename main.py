@@ -13,6 +13,7 @@ def sub_cb(topic, msg):
 
 #IsConnected
 sta_if = network.WLAN(network.STA_IF)
+ap_if = network.WLAN(network.AP_IF)
 if not sta_if.isconnected():
         print('connecting to network...')
         sta_if.active(True)

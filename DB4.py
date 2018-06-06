@@ -15,7 +15,7 @@ import ssd1306
 #//////////////////////////////////////////////////////////////////////////////
 
 class Pump:
-    """ Point class represents and manipulates x,y coords. """
+    
     
      # constructor
     def __init__(self):
@@ -221,7 +221,7 @@ class LightSensor:
         return self.state
     
     def server_send(self):
-        self.client.publish(topic="abho/feeds/lightIntensity", msg= str(self.intensity))
+        client.publish(topic="abho/feeds/lightIntensity", msg= str(self.intensity))
         
 class Cooler:
     
@@ -254,9 +254,9 @@ class Cooler:
             print("Unknown message") # ... do nothing but output that it happened.
         
         # Subscribed messages will be delivered to this callback
-        self.client.set_callback(self.sub_cb())
-        self.client.subscribe(topic="abho/feeds/cool")
-        self.client.check_msg()    
+        client.set_callback(self.sub_cb())
+        client.subscribe(topic="abho/feeds/cool")
+        client.check_msg()    
         
 #///////////////////////////////    ///  Main code   //////////////////////////////        
 #CallBack Message

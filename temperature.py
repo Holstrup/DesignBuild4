@@ -1,7 +1,8 @@
 import math
 import machine
-#adcT is port A1 //GPIO 25
-adcT= machine.ADC(machine.Pin(25))
+import time
+#adcT is port A3 //GPIO 39
+adcT= machine.ADC(machine.Pin(39))
 T0=298.15
 B=3950
 #R0 the resistor.
@@ -11,7 +12,6 @@ def Temp():
     R=R0/((4095/adcT.read())-1)
     T=(T0*B/(math.log(R/R0)*T0+B))-273.15
     return T
-
 
 #Should have a function in main, that calls this every x second/minute
 def sendTemp():

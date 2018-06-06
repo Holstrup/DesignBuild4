@@ -5,9 +5,9 @@ cooler=Pin(13,Pin.OUT)
 def sub_cb(topic, msg):          # sub_cb means "callback subroutine"
     print((topic, msg))          # Outputs the message that was received. Debugging use.
     if msg == b"ON":             # If message says "ON" ...
-       cooler.value(1)       # ... turns on driver/pump LED on
+       cooler.value(1)       # ... turns on 5V
     elif msg == b"OFF":          # If message says "OFF" ...
-        cooler.value(0)           # ... turns off driver/pump LED on
+        cooler.value(0)           # ... turns on 12V
     else:                        # If any other message is received ...
         print("Unknown message") # ... do nothing but output that it happened.
 

@@ -1,7 +1,7 @@
 from machine import Pin
 import time
 forward =Pin(14, Pin.OUT)
-backwards=Pin(32,Pin.Out)
+backwards=Pin(32,Pin.OUT)
 
 
 

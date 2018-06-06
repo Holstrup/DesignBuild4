@@ -1,6 +1,8 @@
 #Basic Imports
 import network
 import machine
+from machine import Pin
+from machine import ADC
 
 #Import MQTT
 import sys
@@ -68,5 +70,9 @@ def OLEDMessage(message):
     display.show()
 
 
+
+def lightSensor():
+    adc = ADC(Pin(34, Pin.IN))
+    return adc.read()
 
 

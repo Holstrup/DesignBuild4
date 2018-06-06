@@ -1,5 +1,5 @@
 # NOTES:
-# Connect pin 25 (A1) with pin 32 (the one to linearize)
+# Connect pin 25 (A1) with pin 33 (the one to linearize)
 # Set DAC_Vmax (should be 3.15 in all devices, but...)
 # Set the desired ADC_MAX = 2^ADC_BIT_WIDTH-1 and the proper adc.width(ADC.WIDTH_10BIT)
 
@@ -14,11 +14,11 @@ import utime
 ADC_DELAY = 10
 DAC_DELAY = 5
 
-ADC_PIN_NO = 32
+ADC_PIN_NO = 33
 DAC_PIN_NO = 25
 
 NUM_SAMPLES = 50
-ADC_MAX = 4095 # 1023
+ADC_MAX = 1023
 DAC_MAX = 255
 
 DAC_Vmax = 3.15
@@ -31,7 +31,7 @@ look_up_ADC = []
 # Initialize ADC
 adc = ADC(Pin(ADC_PIN_NO))
 adc.atten(ADC.ATTN_11DB)
-adc.width(ADC.WIDTH_12BIT) # was 10
+adc.width(ADC.WIDTH_10BIT) # was 10
 
 # Initialize DAC
 dac = DAC(Pin(DAC_PIN_NO), bits=8)
@@ -103,4 +103,8 @@ for i in range(0, ADC_MAX+1):
 
 print('----------------------------------------------------')
 print('----------------------------------------------------')
-print(adc_V_lookup)
+#print(adc_V_lookup)
+file = open('lin32.txt', 'w')
+for item in adc_V_lookup:
+    file.write("%s," % item)
+file.close()

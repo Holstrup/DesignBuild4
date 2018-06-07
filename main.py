@@ -17,9 +17,10 @@ integralTerm = 0
 
 
 def main():
+    PIDOut, pastError, integralTerm = TempPID(0, 0, 0)
     while True:
         time = utime.localtime()[5]
-        if time % 5 == 0:
+        if time % 30 == 0:
             temp = getTemp()
             inten = intensity()
 
@@ -27,5 +28,4 @@ def main():
             webUpload.both(temp, inten)
 
             PIDOut, pastError, integralTerm = TempPID(temp,pastError,integralTerm)
-
-            #pidMap(PIDOut)
+            pidMap(PIDOut)

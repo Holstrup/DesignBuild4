@@ -3,7 +3,7 @@
 # PYTHON PID
 
 def TempPID(measuredTemp, pastError, integralTerm):
-    desiredTemp = 19 # Target Temperature
+    desiredTemp = 17 # Target Temperature
     deltaT = 1
     
     P = 1

@@ -30,13 +30,10 @@ def read_temp(temp_sens):
 
     # Average of the NUM_SAMPLES and look it up in the table
     raw_average = sum(raw_read)/NUM_SAMPLES
-    #print('raw_avg = ' + str(raw_average))
-    #print('V_measured = ' + str(adc_V_lookup[round(raw_average)]))
 
     # Convert to resistance
     raw_average = ADC_MAX * adc_V_lookup[round(raw_average)]/ADC_Vmax
     resistance = (SER_RES * raw_average) / (ADC_MAX - raw_average)
-    #print('Thermistor resistance: {} ohms'.format(resistance))
 
     # Convert to temperature
     steinhart  = log(resistance / NOM_RES) / THERM_B_COEFF
@@ -45,7 +42,6 @@ def read_temp(temp_sens):
     return steinhart
 
 
-print("I'm alive!\n")
 def getTemp():
     temp_sens = init_temp_sensor()
     temp = read_temp(temp_sens)

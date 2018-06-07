@@ -1,4 +1,3 @@
-
 def do_connect():
     import network
     sta_if = network.WLAN(network.STA_IF)
@@ -10,7 +9,3 @@ def do_connect():
             pass
     print('network config:', sta_if.ifconfig())
 
-
-import os
-os.remove('boot.py')
-os.remove('main.py')

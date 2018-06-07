@@ -26,6 +26,7 @@ if not sta_if.isconnected():
             pass
         print('network config:', sta_if.ifconfig())
 
+
 #Publish value
 client = MQTTClient("device_id", "io.adafruit.com", user="abho", password="bbd0c066695243c2b7d30dbc94614a94", port=1883)
 client.set_callback(sub_cb)
@@ -68,7 +69,6 @@ def OLEDMessage(message):
     display = ssd1306.SSD1306_I2C(128, 64, i2c)
     display.text(str(message), 0, 0)
     display.show()
-
 
 
 def lightSensor():

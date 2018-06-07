@@ -4,9 +4,6 @@ forward =Pin(12, Pin.OUT)
 backwards=Pin(27,Pin.OUT)
 
 
-
-
-
 def forward_go():
     backwards.value(0)
     forward.value(1)

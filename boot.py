@@ -9,3 +9,4 @@ def do_connect():
             pass
     print('network config:', sta_if.ifconfig())
 
+

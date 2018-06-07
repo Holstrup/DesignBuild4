@@ -14,6 +14,7 @@ def temperature(Temperature):
     client.disconnect()
 
 
+
 def getPParameter():
     client.connect()
     client.subscribe(topic="abho/feeds/PParameter")

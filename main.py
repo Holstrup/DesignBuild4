@@ -15,8 +15,8 @@ def main():
 
         OLEDMessage(temp,inten)
 
-        webUpload.temperature(temp)
-        #webUpload.intensityUpload(inten)
+        webUpload.both(temp,inten)
+        
 
 
         time.sleep(5)

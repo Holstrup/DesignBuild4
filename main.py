@@ -24,8 +24,10 @@ def main():
             temp = getTemp()
             inten = intensity()
 
-            OLEDMessage(temp,inten)
+            PIDOut, pastError, integralTerm = TempPID(temp,pastError,integralTerm)
+
+            OLEDMessage(temp, inten, PIDOut)
             webUpload.both(temp, inten)
 
-            PIDOut, pastError, integralTerm = TempPID(temp,pastError,integralTerm)
+
             pidMap(PIDOut)

@@ -16,7 +16,6 @@ pastError = 0
 integralTerm = 0
 
 
-
 def main():
     while True:
         time = utime.localtime()[5]

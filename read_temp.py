@@ -49,7 +49,6 @@ print("I'm alive!\n")
 def getTemp():
     temp_sens = init_temp_sensor()
     temp = read_temp(temp_sens)
-    print(temp)
     return temp
 
 

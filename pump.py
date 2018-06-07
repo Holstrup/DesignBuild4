@@ -1,18 +1,15 @@
 from machine import Pin
+from machine import PWM
 import time
-forward =Pin(12, Pin.OUT)
-backwards=Pin(27,Pin.OUT)
+forward = PWM(Pin(12, Pin.OUT))
+backwards=PWM(Pin(27,Pin.OUT))
 
 
-def forward_go():
-    backwards.value(0)
-    forward.value(1)
+def pwm(p):
+    freq=p*10
+    forward.freq(freq)
 
-def backwards_go():
-    forward.value(0)
-    backwards.value(1)
 
-def stop():
-    forward.value(0)
-    backwards.value(0)
+
+
 

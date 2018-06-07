@@ -3,20 +3,20 @@ import cooler
 
 def pidMap(pid):
     if pid <= -10:
-        #PWM
+        pump.pwm(100)
         cooler.coolerHigh()
     elif pid <= -8:
-        # PWM
+        pump.pwm(80)
         cooler.coolerHigh()
     elif pid <= -6:
-        # PWM
+        pump.pwm(100)
         cooler.coolerLow()
     elif pid <= -4:
-        # PWM
+        pump.pwm(60)
         cooler.coolerLow()
     elif pid <= -2:
-        # PWM
+        pump.pwm(40)
         cooler.coolerLow()
     else:
-        # Off
+        pump.pwm(0)
         cooler.coolerLow()

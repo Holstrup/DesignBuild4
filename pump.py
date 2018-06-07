@@ -12,10 +12,4 @@ def backwards_go():
     forward.value(0)
     backwards.value(1)
 
-while True:
-    if forward.value()==1:
-        backwards_go()
-    else:
-        forward_go()
-    time.sleep(2)
 

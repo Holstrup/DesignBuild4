@@ -12,4 +12,7 @@ def backwards_go():
     forward.value(0)
     backwards.value(1)
 
+def stop():
+    forward.value(0)
+    backwards.value(0)
 

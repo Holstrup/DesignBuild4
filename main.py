@@ -1,14 +1,24 @@
 #import of files
 import time
 from read_temp import getTemp
-import pump as pump
+#import pump
 from ldr import intensity
-from oled import  OLEDMessage
+from oled import OLEDMessage
+import webUpload
 
 
 
+def main():
+    while True:
+        temp = getTemp()
+        inten = intensity()
+
+        OLEDMessage(temp,inten)
+
+        webUpload.temperature(temp)
+        #webUpload.intensityUpload(inten)
 
 
-while True:
-    OLEDMessage(getTemp(),intensity())
-    time.sleep(5)
+        time.sleep(5)
+
+

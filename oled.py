@@ -13,3 +13,6 @@ def OLEDMessage(temperature, intensity):
     display.text(tempText + str(temperature), 0, 0)
     display.text(odText + str(intensity), 0, 10)
     display.show()
+
+
+

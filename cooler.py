@@ -1,6 +1,13 @@
 from machine import Pin
 cooler=Pin(13,Pin.OUT)
 
+def coolerHigh():
+    cooler.value(0)
+
+def coolerLow():
+    cooler.value(1)
+
+
 # Function to respond to messages from Adafruit IO
 def sub_cb(topic, msg):          # sub_cb means "callback subroutine"
     print((topic, msg))          # Outputs the message that was received. Debugging use.

@@ -7,7 +7,7 @@ forward = PWM(Pin(12), freq=5)
 
 def pwm(d):
     if d == 0:
-        forward.duty(0)
+        forward.duty(1)
     else:
         duty=round(1023 * (d/100))
         forward.duty(duty)

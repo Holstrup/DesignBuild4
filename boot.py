@@ -1,4 +1,5 @@
 import cooler
+from main import main
 
 def do_connect():
     import network
@@ -13,3 +14,4 @@ def do_connect():
 
 do_connect()
 cooler.coolerLow()
+main()

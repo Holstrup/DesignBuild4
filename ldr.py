@@ -8,7 +8,7 @@ def intensity():
     for i in range(5):
         adc_read.append(lSens.read())
     intens=sum(adc_read)/5
-    print(intens)
+    return intens
 
 
 def sensor():

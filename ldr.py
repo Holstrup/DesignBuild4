@@ -9,11 +9,3 @@ def intensity():
         adc_read.append(lSens.read())
     intens=sum(adc_read)/5
     return intens
-
-
-def sensor():
-    intensity=lSens.read
-    #client.subscribe(topic="abho/feeds/lightIntensity")
-    client.publish(topic="abho/feeds/lightIntensity", msg= str(intensity))
-
-

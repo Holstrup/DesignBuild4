@@ -18,8 +18,8 @@ integralTerm = [0,0,0,0,0,0,0,0,0,0]
 def main():
     PIDOut, pastError, currentIntegralTerm = TempPID(0, 0, integralTerm)
     while True:
-        time = utime.localtime()[5]
-        if time % 30 == 0:
+        timed = utime.localtime()[5]
+        if timed % 30 == 0:
             temp = getTemp()
             inten = intensity()
 
@@ -27,8 +27,9 @@ def main():
 
             PIDOut, pastError, currentIntegralTerm = TempPID(temp,pastError,integralTerm)
 
-            integralTerm.append(currentIntegralTerm)
+            integralTerm.append(pastError)
             integralTerm.pop(0)
+            print(integralTerm)
 
 
             OLEDMessage(temp, inten, PIDOut)
@@ -36,3 +37,4 @@ def main():
 
 
             pidMap(PIDOut)
+        time.sleep(1)

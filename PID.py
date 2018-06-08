@@ -3,11 +3,12 @@ def TempPID(measuredTemp, pastError, integralTerm):
     deltaT = 1
     
     P = 1
-    I = 0.2
+    I = 1
     D = 0.3
 
     currentError = desiredTemp - measuredTemp
-    integralTerm = sum(integralTerm) + currentError*deltaT
+
+    integralTerm = (sum(integralTerm))*deltaT
     derivativeTerm = (currentError - pastError)/deltaT
     
     

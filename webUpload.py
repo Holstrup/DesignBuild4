@@ -22,12 +22,14 @@ def intensityUpload(intensity):
     client.publish(topic="abho/feeds/lightIntensity", msg= str(intensity))
     client.disconnect()
     
-def both(Temperature,intensity):
+def both(Temperature,intensity,pid):
     client.connect()
     client.subscribe(topic="abho/feeds/Temperature")
     client.publish(topic="abho/feeds/Temperature", msg= str(Temperature))
     client.subscribe(topic="abho/feeds/lightIntensity")
     client.publish(topic="abho/feeds/lightIntensity", msg=str(intensity))
+    client.subscribe(topic="abho/feeds/pid")
+    client.publish(topic="abho/feeds/pid", msg= str(pid))
     client.disconnect()
     
 def getPParameter():

@@ -27,7 +27,7 @@ def main():
             PIDOut, pastError, integralTerm = TempPID(temp,pastError,integralTerm)
 
             OLEDMessage(temp, inten, PIDOut)
-            webUpload.both(temp, inten)
+            webUpload.both(temp, inten,PIDOut)
 
 
             pidMap(PIDOut)

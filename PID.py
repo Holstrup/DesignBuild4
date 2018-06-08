@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# PYTHON PID
-
 def TempPID(measuredTemp, pastError, integralTerm):
     desiredTemp = 17 # Target Temperature
     deltaT = 1

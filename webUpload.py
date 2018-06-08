@@ -9,7 +9,6 @@ def sub_cb(topic,msg):
 client = MQTTClient("device_id", "io.adafruit.com", user="abho", password="bbd0c066695243c2b7d30dbc94614a94", port=1883)
 client.set_callback(sub_cb)
 
-
 def temperature(Temperature):
     client.connect()
     client.subscribe(topic="abho/feeds/Temperature")

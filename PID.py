@@ -9,9 +9,9 @@ def TempPID(measuredTemp, pastError, integralTerm):
     P = 1
     I = 0.2
     D = 0.3
-    
+
     currentError = desiredTemp - measuredTemp
-    integralTerm = integralTerm + currentError*deltaT  
+    integralTerm = sum(integralTerm) + currentError*deltaT
     derivativeTerm = (currentError - pastError)/deltaT
     
     

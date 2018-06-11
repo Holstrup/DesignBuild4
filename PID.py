@@ -1,10 +1,7 @@
-def TempPID(measuredTemp, pastError, integralTerm):
-    desiredTemp = 17 # Target Temperature
+
+
+def TempPID(measuredTemp, pastError, integralTerm, desiredTemp, P, I, D):
     deltaT = 1
-    
-    P = 1
-    I = 1
-    D = 0.3
 
     currentError = desiredTemp - measuredTemp
 

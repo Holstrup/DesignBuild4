@@ -5,6 +5,7 @@ import time
 
 P = 1.0
 i = 1.0
+D = 0.3
 targetTemp = 19.0
 
 
@@ -98,18 +99,39 @@ def IDownload2():
     return i
 
 
+#D Parameter
+def DCallBack(topic,msg):
+    print("Change in D registered")
+    global D
+    D = float(msg.decode("utf-8"))
+
+dclient = MQTTClient("DValue", "io.adafruit.com", user="abho", password="bbd0c066695243c2b7d30dbc94614a94", port=1883)
+dclient.set_callback(DCallBack)
+
+def DDownload():
+    dclient.connect()
+    dclient.subscribe(topic="abho/feeds/dparameter")
+    return D
+
+def DDownload2():
+    dclient.check_msg()
+    return D
+
+
+
 #PID Upload
-def pidUpload(P,I,D):
+def pidUpload(P,i,D):
     client.connect()
 
     client.subscribe(topic="abho/feeds/pparameter")
     client.publish(topic="abho/feeds/pparameter", msg=str(P))
 
-    client.subscribe(topic="abho/feeds/iparameter")
-    client.publish(topic="abho/feeds/iparameter", msg=str(i))
-
     client.subscribe(topic="abho/feeds/dparameter")
     client.publish(topic="abho/feeds/dparameter", msg=str(D))
 
+    client.subscribe(topic="abho/feeds/iparameter")
+    client.publish(topic="abho/feeds/iparameter", msg=str(i))
+
     client.disconnect
+
 

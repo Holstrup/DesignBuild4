@@ -35,6 +35,6 @@ def main():
 
             #Webupload and Oled
             OLEDMessage(temp, inten, PIDOut,pwmpump,cooler)
-            #webUpload.both(temp, inten, PIDOut)
+            webUpload.both(temp, inten, PIDOut,pwmpump,cooler)
 
         time.sleep(1)

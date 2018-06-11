@@ -9,6 +9,8 @@ import webUpload
 from PID import TempPID
 from pidMapping import pidMap
 
+P = 0.0
+
 
 pastError = 0
 integralTerm = [0,0,0,0,0,0,0,0,0,0]
@@ -18,30 +20,11 @@ integralTerm = [0,0,0,0,0,0,0,0,0,0]
 
 def main():
     PIDOut, pastError, currentIntegralTerm = TempPID(0, 0, integralTerm)
-    webUpload.getP()
-    #webUpload.getI()
     while True:
         timed = utime.localtime()[5]
         if timed % 30 == 0:
             temp = getTemp()
             inten = intensity()
-
-            try:
-                #webUpload.getP()
-                P = webUpload.getPParameter()
-
-                #webUpload.getI()
-                #I = webUpload.getIParameter()
-            except OSError:
-                print("Error")
-
-
-
-
-            #D = webUpload.getIParameter()
-
-            print("P is: " + str(P))
-            #print("I is: " + str(I))
 
 
             #PID Controls
@@ -52,6 +35,6 @@ def main():
 
             #Webupload and Oled
             OLEDMessage(temp, inten, PIDOut)
-            #webUpload.both(temp, inten, PIDOut)
+            webUpload.both(temp, inten, PIDOut)
 
         time.sleep(1)

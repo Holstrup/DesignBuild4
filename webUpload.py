@@ -2,6 +2,10 @@ import sys
 sys.path.insert(0, '/lib')
 from simple import MQTTClient
 
+P = 0.0
+I = 0.0
+
+
 def sub_cb(topic,msg):
     print(msg)
 
@@ -19,7 +23,6 @@ def intensityUpload(intensity):
     client.connect()
     client.subscribe(topic="abho/feeds/lightIntensity")
     client.publish(topic="abho/feeds/lightIntensity", msg= str(intensity))
-    client.disconnect()
     
 def both(Temperature,intensity,pid):
     client.connect()
@@ -30,26 +33,40 @@ def both(Temperature,intensity,pid):
     client.subscribe(topic="abho/feeds/pid")
     client.publish(topic="abho/feeds/pid", msg= str(pid))
     client.disconnect()
-    
-def getPParameter():
-    client.connect()
-    client.subscribe(topic="abho/feeds/PParameter")
-    p = client.check_msg()
-    client.disconnect()
-    return p
 
+
+def PCallBack(topic,msg):
+    print("Here")
+    global P
+    P = float(msg.decode("utf-8"))
+
+
+pclient = MQTTClient("device_id", "io.adafruit.com", user="abho", password="bbd0c066695243c2b7d30dbc94614a94", port=1883)
+pclient.set_callback(PCallBack)
+
+
+def getP():
+    pclient.connect()
+    pclient.subscribe(topic="abho/feeds/PParameter")
+
+def getPParameter():
+    pclient.check_msg()
+    return P
+
+
+
+def ICallBack(topic,msg):
+    print("Here")
+    global I
+    I = float(msg.decode("utf-8"))
+
+Iclient = MQTTClient("device_id", "io.adafruit.com", user="abho", password="bbd0c066695243c2b7d30dbc94614a94", port=1883)
+Iclient.set_callback(ICallBack)
+
+def getI():
+    Iclient.connect()
+    Iclient.subscribe(topic="abho/feeds/IParameter")
 
 def getIParameter():
-    client.connect()
-    client.subscribe(topic="abho/feeds/IParameter")
-    i = client.check_msg()
-    client.disconnect()
-    return i
-
-
-def getDParameter():
-    client.connect()
-    client.subscribe(topic="abho/feeds/DParameter")
-    d = client.check_msg()
-    client.disconnect()
-    return d
+    Iclient.check_msg()
+    return I

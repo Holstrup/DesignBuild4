@@ -9,8 +9,6 @@ import webUpload
 from PID import TempPID
 from pidMapping import pidMap
 
-P = 0.0
-
 
 pastError = 0
 integralTerm = [0,0,0,0,0,0,0,0,0,0]
@@ -20,6 +18,7 @@ integralTerm = [0,0,0,0,0,0,0,0,0,0]
 
 def main():
     PIDOut, pastError, currentIntegralTerm = TempPID(0, 0, integralTerm)
+
     while True:
         timed = utime.localtime()[5]
         if timed % 30 == 0:
@@ -27,14 +26,15 @@ def main():
             inten = intensity()
 
 
+
             #PID Controls
             PIDOut, pastError, currentIntegralTerm = TempPID(temp,pastError,integralTerm)
             integralTerm.append(pastError)
             integralTerm.pop(0)
-            pidMap(PIDOut)
+            pwmpump, cooler=pidMap(PIDOut)
 
             #Webupload and Oled
-            OLEDMessage(temp, inten, PIDOut)
-            webUpload.both(temp, inten, PIDOut)
+            OLEDMessage(temp, inten, PIDOut,pwmpump,cooler)
+            webUpload.both(temp, inten, PIDOut,pwmpump,cooler)
 
         time.sleep(1)

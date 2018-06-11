@@ -13,9 +13,9 @@ from pidMapping import pidMap
 def main():
     # Target Temperature
     targetTemp = 19
-    P = 1
+    P = 1.2
     I = 1
-    D = 0.3
+    D = 0.4
 
     # PID Parameters
     pastError = 0

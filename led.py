@@ -1,5 +1,11 @@
 from machine import Pin
-p12 = Pin(12, Pin.OUT)
+from machine import PWM
 
-p12.value(1)
+
+light = PWM(Pin(21), freq=10000)
+
+light.duty()
+light.freq()
+
+
 

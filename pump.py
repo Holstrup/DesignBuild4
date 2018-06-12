@@ -24,8 +24,14 @@ def forward():
     algeaforward.value(1)
     algeabackward.value(0)
 
-def backward():
+def backwards():
     algeaforward.value(0)
     algeabackward.value(1)
+
+
+def off():
+    algeaforward.value(0)
+    algeabackward.value(0)
+
 
 

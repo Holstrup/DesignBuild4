@@ -5,7 +5,10 @@ lSens = ADC(Pin(33, Pin.IN))
 
 def intensity():
     adc_read=[]
-    for i in range(5):
+    for i in range(10):
         adc_read.append(lSens.read())
-    intens=sum(adc_read)/5
+
+    adc_read = sorted(adc_read)
+    print(adc_read)
+    intens= adc_read[4]
     return intens

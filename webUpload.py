@@ -17,6 +17,12 @@ client = MQTTClient("device_id", "io.adafruit.com", user="abho", password="bbd0c
 client.set_callback(sub_cb)
 
 
+
+
+
+
+
+
 def both(Temperature,intensity,pid,pwmpump,cooler):
     client.connect()
     client.subscribe(topic="abho/feeds/Temperature")
@@ -58,6 +64,9 @@ def targetTempDownload2():
     tempClient.check_msg()
     return targetTemp
 
+def targetTempdisconnect():
+    tempClient.disconnect()
+
 
 
 #P Parameter
@@ -77,6 +86,9 @@ def PDownload():
 def PDownload2():
     pclient.check_msg()
     return P
+
+def PDisconnect():
+    pclient.disconnect()
 
 
 
@@ -99,6 +111,10 @@ def IDownload2():
     return i
 
 
+def IDisconnect():
+    iclient.disconnect()
+
+
 #D Parameter
 def DCallBack(topic,msg):
     print("Change in D registered")
@@ -118,12 +134,14 @@ def DDownload2():
     return D
 
 
+def DDisconnect():
+    dclient.disconnect()
+
 
 #PID Upload
 def pidUpload(P,i,D):
     client.connect()
 
-    client.subscribe(topic="abho/feeds/pparameter")
     client.publish(topic="abho/feeds/pparameter", msg=str(P))
 
     client.subscribe(topic="abho/feeds/dparameter")

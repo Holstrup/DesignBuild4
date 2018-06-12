@@ -39,6 +39,7 @@ def main():
         #Each cycle is 30 seconds
         timed = utime.localtime()[5]
         if timed % 30 == 0:
+
             #Measure
             temp = getTemp()
             inten = intensity()
@@ -66,13 +67,34 @@ def main():
                 P = webUpload.PDownload2()
                 I = webUpload.IDownload2()
                 D = webUpload.DDownload2()
+
             except OSError:
-                print("Error")
+                print("Error in download")
+                break
 
             print("Current target temperature is: " + str(targetTemp))
             print("Current P is: " + str(P))
             print("Current I is: " + str(I))
             print("Current D is: " + str(D))
+            print(utime.localtime())
             print("\n")
+
+
+        if utime.localtime()[4] % 4 == 0 and timed == 20:
+            print("Refreshing...")
+            webUpload.targetTempdisconnect()
+            webUpload.PDisconnect()
+            webUpload.IDisconnect()
+            webUpload.DDisconnect()
+
+            time.sleep(1)
+            webUpload.pidUpload(P,I,D)
+            time.sleep(1)
+
+            webUpload.targetTempDownload()
+            webUpload.PDownload()
+            webUpload.IDownload()
+            webUpload.DDownload()
+            print("Done \n")
 
         time.sleep(1)

@@ -49,6 +49,7 @@ def main():
     while True:
         #Each cycle is 30 seconds
         timed = utime.localtime()[5]
+
         if timed % 30 == 0:
 
             #Measure
@@ -62,9 +63,6 @@ def main():
             pwmpump, cooler = pidMap(PIDOut)
 
 
-
-
-
             try:
                 # Webupload and Oled
                 OLEDMessage(temp, inten, PIDOut, pwmpump, cooler)
@@ -74,42 +72,12 @@ def main():
 
 
         elif timed % 15 == 0:
-            print("Starting Downloads... \n")
-
-            try:
-                targetTemp = webUpload.targetTempDownload2()
-                P = webUpload.PDownload2()
-                I = webUpload.IDownload2()
-                D = webUpload.DDownload2()
-
-            except OSError:
-                print("Error in download")
-                break
-
-            print("Current target temperature is: " + str(targetTemp))
-            print("Current P is: " + str(P))
-            print("Current I is: " + str(I))
-            print("Current D is: " + str(D))
-            print(utime.localtime())
-            print("\n")
+           targetTemp, P, I, D = webUpload.downloads()
 
 
         if utime.localtime()[4] % 4 == 0 and timed == 20:
-            print("Refreshing...")
-            webUpload.targetTempdisconnect()
-            webUpload.PDisconnect()
-            webUpload.IDisconnect()
-            webUpload.DDisconnect()
+            webUpload.refresh(P, I, D)
 
-            time.sleep(1)
-            webUpload.pidUpload(P,I,D)
-            time.sleep(1)
-
-            webUpload.targetTempDownload()
-            webUpload.PDownload()
-            webUpload.IDownload()
-            webUpload.DDownload()
-            print("Done \n")
 
         if timed % 12 == 0:
             print("pumptime: %s" % pumpTime)

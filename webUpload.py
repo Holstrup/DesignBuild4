@@ -3,10 +3,10 @@ sys.path.insert(0, '/lib')
 from simple import MQTTClient
 import time
 
-P = 1.0
+P = 2.0
 i = 1.0
-D = 0.3
-targetTemp = 19.0
+D = 2.0
+targetTemp = 18.0
 
 
 def sub_cb(topic,msg):

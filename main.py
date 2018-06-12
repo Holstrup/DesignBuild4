@@ -13,16 +13,16 @@ from pidMapping import pidMap, pidMapOD
 
 def main():
     # Target Temperature
-    targetTemp = 19
+    targetTemp = 18.0
     #Target intentensity:
     targetInten=600
     pumpBack=0
     pumpTime=0
 
 
-    P = 1.2
-    I = 1
-    D = 0.4
+    P = 2.0
+    I = 1.0
+    D = 2.0
 
     # PID Parameters
     pastError = 0

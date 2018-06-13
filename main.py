@@ -23,6 +23,7 @@ def do_connect():
             pass
     print('network config:', sta_if.ifconfig())
 
+
 def main():
     # Target Temperature
     targetTemp = 19

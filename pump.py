@@ -1,5 +1,6 @@
 from machine import Pin
 from machine import PWM
+from ldr import intensity
 
 
 #Peltier Pump Cycle
@@ -32,6 +33,18 @@ def backwards():
 def off():
     algeaforward.value(0)
     algeabackward.value(0)
+
+
+def getIntensity():
+    if algeaforward.value()==1:
+        off()
+        inten=intensity()
+        time.sleep(0.5)
+        algeaforward.value(1)
+
+    else:
+        inten = intensity()
+    return inten
 
 
 

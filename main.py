@@ -124,7 +124,7 @@ def main():
             print("pumptime: %s" % pumpTime)
             if pumpTime < 12:
                 if pumpBack == 0:
-                    inten = intensity()
+                    inten=getIntensity()
                     PIDOutOd, pastErrorOd = odpid(inten, pastErrorOd, integralTermOd, targetInten, P, I, D)
                     integralTermOd.append(pastErrorOd)
                     integralTermOd.pop(0)

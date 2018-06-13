@@ -21,6 +21,7 @@ def do_connect():
 
 
 
+
 def main():
     # Target Temperature
     targetTemp = 19

@@ -1,6 +1,7 @@
 from machine import Pin
 from machine import PWM
 from ldr import intensity
+import time
 
 
 #Peltier Pump Cycle

@@ -36,10 +36,10 @@ def both(Temperature,intensity,pid,pwmpump,cooler):
 
 
 #Target Temp
-def targetTempUpload(targetTemp):
+def targetTempUpload(temp):
     client.connect()
     client.subscribe(topic="abho/feeds/targettemp")
-    client.publish(topic="abho/feeds/targettemp", msg=str(targetTemp))
+    client.publish(topic="abho/feeds/targettemp", msg=str(temp))
     client.disconnect
 
 

@@ -17,6 +17,9 @@ def do_connect():
         print('connecting to network...')
         sta_if.active(True)
         sta_if.connect('Internet_of_Mussels', 'Feather_HUZZAH32')
+        while not sta_if.isconnected():
+            pass
+
     print('network config:', sta_if.ifconfig())
 
 
@@ -42,7 +45,8 @@ def main():
 
 
     #Initial PID measures
-    webUpload.targetTempUpload(targetTemp)
+    print("targetTemp: %s " %targetTemp)
+    #webUpload.targetTempUpload(targetTemp)
     PIDOut, pastError= TempPID(0, 0, integralTerm, targetTemp, P, I, D)
     PIDOutOd, pastErrorOd= odpid(0, 0, integralTermOd, targetInten, P, I, D)
     webUpload.pidUpload(P, I, D)
@@ -124,7 +128,8 @@ def main():
             print("pumptime: %s" % pumpTime)
             if pumpTime < 12:
                 if pumpBack == 0:
-                    inten=getIntensity()
+                    inten=pump.getIntensity()
+                    print("Intensity" + str(inten))
                     PIDOutOd, pastErrorOd = odpid(inten, pastErrorOd, integralTermOd, targetInten, P, I, D)
                     integralTermOd.append(pastErrorOd)
                     integralTermOd.pop(0)

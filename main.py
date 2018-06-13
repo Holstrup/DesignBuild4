@@ -10,8 +10,6 @@ from PID import TempPID, odpid
 from pidMapping import pidMap, pidMapOD
 
 
-
-
 def do_connect():
     import network
     sta_if = network.WLAN(network.STA_IF)
@@ -19,19 +17,18 @@ def do_connect():
         print('connecting to network...')
         sta_if.active(True)
         sta_if.connect('Internet_of_Mussels', 'Feather_HUZZAH32')
-        while not sta_if.isconnected():
-            pass
     print('network config:', sta_if.ifconfig())
+
+
 
 def main():
     # Target Temperature
     targetTemp = 19
+
     #Target intentensity:
     targetInten=600
     pumpBack=0
     pumpTime=0
-
-
 
     P = 1.2
     I = 1
@@ -41,8 +38,6 @@ def main():
     pastError = 0
     integralTerm = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     integralTermOd = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-
 
 
     #Initial PID measures
@@ -115,7 +110,7 @@ def main():
             webUpload.DDisconnect()
 
             time.sleep(1)
-            webUpload.pidUpload(P,I,D)
+            webUpload.pidUpload(P, I, D)
             time.sleep(1)
 
             webUpload.targetTempDownload()
@@ -155,4 +150,3 @@ def main():
 
 
         time.sleep(1)
-

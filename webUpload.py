@@ -19,9 +19,6 @@ client.set_callback(sub_cb)
 
 
 
-
-
-
 def both(Temperature,intensity,pid,pwmpump,cooler):
     client.connect()
     client.subscribe(topic="abho/feeds/Temperature")
@@ -150,5 +147,3 @@ def pidUpload(P,i,D):
     client.publish(topic="abho/feeds/iparameter", msg=str(i))
 
     client.disconnect
-
-

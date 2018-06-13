@@ -10,4 +10,6 @@ def intensity():
         adc_read.append(lSens.read())
     adc_read = sorted(adc_read)
     intens= adc_read[24]
-    return intens
+    intens2 = sum(adc_read)/50
+    print("Median: " + str(intens))
+    print("Ave: " + str(intens2))

@@ -3,14 +3,14 @@ from machine import PWM
 
 
 #Peltier Pump Cycle
-forward = PWM(Pin(12), freq=5)
+forward = PWM(Pin(27), freq=5)
 
 def pwm(d):
     if d == 0:
-        forward = PWM(Pin(12), freq=5)
+        forward = PWM(Pin(27), freq=5)
         forward.duty(1)
     else:
-        forward = PWM(Pin(12), freq=5)
+        forward = PWM(Pin(27), freq=5)
         dd = round(1023 * (d/100))
         forward.duty(dd)
 

@@ -11,6 +11,18 @@ from pidMapping import pidMap, pidMapOD
 
 
 
+
+def do_connect():
+    import network
+    sta_if = network.WLAN(network.STA_IF)
+    if not sta_if.isconnected():
+        print('connecting to network...')
+        sta_if.active(True)
+        sta_if.connect('Internet_of_Mussels', 'Feather_HUZZAH32')
+        while not sta_if.isconnected():
+            pass
+    print('network config:', sta_if.ifconfig())
+
 def main():
     # Target Temperature
     targetTemp = 19
@@ -94,6 +106,7 @@ def main():
 
 
         if utime.localtime()[4] % 4 == 0 and timed == 20:
+            do_connect()
             print("Refreshing...")
             webUpload.targetTempdisconnect()
             webUpload.PDisconnect()
@@ -118,7 +131,8 @@ def main():
                     PIDOutOd, pastErrorOd = odpid(inten, pastErrorOd, integralTermOd, targetInten, P, I, D)
                     integralTermOd.append(pastErrorOd)
                     integralTermOd.pop(0)
-                    pumpTime = pidMapOD(PIDOut)
+                    pumpTime = pidMapOD(PIDOutOd)
+                    print("PID OD: %s" % PIDOutOd)
                     print("New pumptime: %s" % pumpTime)
                     if pumpTime==0:
                         pump.off()
@@ -140,3 +154,4 @@ def main():
 
 
         time.sleep(1)
+

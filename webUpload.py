@@ -22,7 +22,6 @@ client.set_callback(sub_cb)
 
 
 
-
 def both(Temperature,intensity,pid,pwmpump,cooler):
     client.connect()
     client.subscribe(topic="abho/feeds/Temperature")

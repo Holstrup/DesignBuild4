@@ -23,7 +23,7 @@ def pwm(d):
 algeaforward = Pin(14, Pin.OUT)
 algeabackward = Pin(15, Pin.OUT)
 
-def forward():
+def forwards():
     algeaforward.value(1)
     algeabackward.value(0)
 
@@ -31,16 +31,26 @@ def backwards():
     algeaforward.value(0)
     algeabackward.value(1)
 
+def off():
+    algeaforward.value(0)
+    algeabackward.value(0)
+
 
 
 
 def getIntensity():
     pwmpump=forward.duty()
+    print(pwmpump)
     if pwmpump!=1:
+        print("Stopping pump")
         forward.duty(1)
+        print("intensity")
         time.sleep(1)
         inten=intensity()
+        print(inten)
+
         forward.duty(pwmpump)
+        print(forward.duty())
 
     else:
         inten = intensity()

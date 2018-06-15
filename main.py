@@ -130,7 +130,7 @@ def main():
 
         if minute == 1 and timed == 12:
             print("Pump forward")
-            pump.forward()
+            pump.forwards()
         if minute == 5 and timed == 12:
             print("Pump off")
             pump.off()
@@ -157,7 +157,7 @@ def main():
                     if pumpTime==0:
                         pump.off()
                     else:
-                        pump.forward()
+                        pump.forwards()
                         pumpBack+=1
                         pumpTime-=12
 

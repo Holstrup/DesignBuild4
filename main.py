@@ -3,7 +3,7 @@ import time
 import utime
 from read_temp import getTemp
 import pump
-from ldr import intensity
+from led import setLight
 from oled import OLEDMessage
 import webUpload
 from PID import TempPID, odpid
@@ -26,6 +26,7 @@ def do_connect():
 
 
 def main():
+    setLight(50000,1023)
     # Target Temperature
     targetTemp = 19.0
 

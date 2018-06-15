@@ -18,6 +18,7 @@ def pwm(d):
 
 
 
+
 #Algae Pump Cycle
 algeaforward = Pin(14, Pin.OUT)
 algeabackward = Pin(15, Pin.OUT)
@@ -31,17 +32,15 @@ def backwards():
     algeabackward.value(1)
 
 
-def off():
-    algeaforward.value(0)
-    algeabackward.value(0)
 
 
 def getIntensity():
-    if algeaforward.value()==1:
-        off()
+    pwmpump=forward.duty()
+    if pwmpump!=1:
+        forward.duty(1)
         inten=intensity()
         time.sleep(1)
-        algeaforward.value(1)
+        forward.duty(pwmpump)
 
     else:
         inten = intensity()

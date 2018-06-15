@@ -2,7 +2,8 @@ from machine import Pin
 from machine import PWM
 
 
-light = PWM(Pin(21), freq=50000, duty=512)
+def setLight(freq,duty):
+    light = PWM(Pin(21), freq=freq, duty=duty)
 
 light.duty()
 

@@ -27,10 +27,9 @@ def do_connect():
 
 def main():
     # Target Temperature
-    targetTemp = 19
+    targetTemp = 19.0
 
     #Target intentensity:
-    targetInten=600
     pumpBack=0
     pumpTime=0
 
@@ -41,14 +40,14 @@ def main():
     # PID Parameters
     pastError = 0
     integralTerm = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    integralTermOd = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    #integralTermOd = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 
     #Initial PID measures
     print("targetTemp: %s " %targetTemp)
-    #webUpload.targetTempUpload(targetTemp)
+
     PIDOut, pastError= TempPID(0, 0, integralTerm, targetTemp, P, I, D)
-    PIDOutOd, pastErrorOd= odpid(0, 0, integralTermOd, targetInten, P, I, D)
+    #PIDOutOd, pastErrorOd = odpid(0, 0, integralTermOd, targetInten, P, I, D)
     webUpload.pidUpload(P, I, D)
 
 
@@ -59,12 +58,16 @@ def main():
     webUpload.IDownload()
     webUpload.DDownload()
 
+    webUpload.targetTempUpload2(targetTemp)
+
     while True:
         #Each cycle is 30 seconds
         timed = utime.localtime()[5]
+        minute = utime.localtime()[4]
         if timed % 30 == 0:
 
             #Measure
+            inten = pump.getIntensity()
             temp = getTemp()
 
 
@@ -124,6 +127,20 @@ def main():
             webUpload.DDownload()
             print("Done \n")
 
+        if minute == 1 and timed == 12:
+            print("Pump forward")
+            pump.forward()
+        if minute == 5 and timed == 12:
+            print("Pump off")
+            pump.off()
+        if minute == 6 and timed == 12:
+            print("Pump backwards")
+            pump.backwards()
+        if minute == 10 and timed == 12:
+            print("Pump off")
+            pump.off()
+
+        """
         if timed % 12 == 0:
             print("pumptime: %s" % pumpTime)
             if pumpTime < 12:
@@ -153,6 +170,6 @@ def main():
                 pumpTime -= 12
                 pumpBack += 1
                 print("pumpback: %s" % pumpBack)
-
+            """
 
         time.sleep(1)

@@ -40,7 +40,7 @@ def getIntensity():
     if algeaforward.value()==1:
         off()
         inten=intensity()
-        time.sleep(0.5)
+        time.sleep(1)
         algeaforward.value(1)
 
     else:

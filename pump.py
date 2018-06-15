@@ -38,8 +38,8 @@ def getIntensity():
     pwmpump=forward.duty()
     if pwmpump!=1:
         forward.duty(1)
-        inten=intensity()
         time.sleep(1)
+        inten=intensity()
         forward.duty(pwmpump)
 
     else:

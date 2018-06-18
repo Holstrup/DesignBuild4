@@ -1,4 +1,4 @@
-#33270 - Design-Build 4: Autonomous devices for controlling and studying living systems 
+# 33270 - Design-Build 4: Autonomous devices for controlling and studying living systems 
 
 This is the github repository for group 5 in the 2018 version of the course 33270. The project aims to conduct an experiment with mussels and algae, while controlling the environment they're in. More specifically, the code in this repository handles uploading to the adafruit webserver (webupload.py), reading the temperature (read_temp.py), a PID algorithm implementation to control the temperature (PID.py) and more. 
 
@@ -25,18 +25,6 @@ pip install adafruit-ampy
 
 To run the experiments on the board, simply transfer the files using ampy and begin. 
 
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 

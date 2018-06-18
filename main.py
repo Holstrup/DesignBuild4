@@ -150,7 +150,6 @@ def main():
 
                 time.sleep(1)
 
-
                 webUpload.pUpload(P)
                 webUpload.iUpload(I)
                 webUpload.dUpload(D)
@@ -160,22 +159,13 @@ def main():
                 print(e)
                 print("Refreshing Error")
 
-
-        if inten > targetIntensity and pumpState == 0 and timed == pumpTime:
-            print("Transfering water from algae to mussels")
+        if minute == 1 and timed == 12:
             pump.forwards()
-            pumpState = 1
-        elif pumpState == 1 and timed == pumpTime:
-            print("Algae pump off")
+        elif minute == 3 and timed == 12:
             pump.off()
-            pumpState = 2
-        elif pumpState == 2 and timed == pumpTime:
-            print("Transfering water from mussels to algae")
+        elif minute == 4 and timed == 12:
             pump.backwards()
-            pumpState = 3
-        elif pumpState == 3 and timed == pumpTime:
-            print("Algae pump off")
+        elif minute == 6 and timed == 12:
             pump.off()
-            pumpState = 0
 
         time.sleep(1)

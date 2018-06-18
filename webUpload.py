@@ -19,18 +19,23 @@ client.set_callback(sub_cb)
 
 
 
-def both(Temperature,intensity,pid,pwmpump,cooler):
+def both(Temperature,intensity,PIDVal,pwmpump,cooler):
     client.connect()
     client.subscribe(topic="abho/feeds/Temperature")
     client.publish(topic="abho/feeds/Temperature", msg= str(Temperature))
+    print("Temp Uploaded")
     client.subscribe(topic="abho/feeds/lightintensity")
     client.publish(topic="abho/feeds/lightIntensity", msg=str(intensity))
+    print("Light Intensity Upload")
     client.subscribe(topic="abho/feeds/pid")
-    client.publish(topic="abho/feeds/pid", msg= str(pid))
+    client.publish(topic="abho/feeds/pid", msg= str(PIDVal))
+    print("PID Upload")
     client.subscribe(topic="abho/feeds/cooler-pump")
     client.publish(topic="abho/feeds/cooler-pump", msg= pwmpump)
+    print("Cooler Pump Uploaded")
     client.subscribe(topic="abho/feeds/cooler")
     client.publish(topic="abho/feeds/cooler", msg= cooler)
+    print("Cooler Uploaded")
     client.disconnect()
 
 
@@ -40,7 +45,10 @@ def targetTempUpload(temp):
     client.connect()
     client.subscribe(topic="abho/feeds/targettemp")
     client.publish(topic="abho/feeds/targettemp", msg=str(temp))
-    client.disconnect
+    client.disconnect()
+
+def targetTempUpload2(temp):
+    client.publish(topic="abho/feeds/targettemp", msg=str(temp))
 
 
 def targetTempCallBack(topic,msg):
@@ -135,15 +143,16 @@ def DDisconnect():
 
 
 #PID Upload
-def pidUpload(P,i,D):
-    client.connect()
 
-    client.publish(topic="abho/feeds/pparameter", msg=str(P))
+def pUpload(Ppara):
+    pclient.subscribe(topic="abho/feeds/pparameter")
+    pclient.publish(topic="abho/feeds/pparameter", msg=str(Ppara))
 
-    client.subscribe(topic="abho/feeds/dparameter")
-    client.publish(topic="abho/feeds/dparameter", msg=str(D))
 
-    client.subscribe(topic="abho/feeds/iparameter")
-    client.publish(topic="abho/feeds/iparameter", msg=str(i))
+def iUpload(Ipara):
+    iclient.subscribe(topic="abho/feeds/iparameter")
+    iclient.publish(topic="abho/feeds/iparameter", msg=str(Ipara))
 
-    client.disconnect
+def dUpload(Dpara):
+    dclient.subscribe(topic="abho/feeds/dparameter")
+    dclient.publish(topic="abho/feeds/dparameter", msg=str(Dpara))

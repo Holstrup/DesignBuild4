@@ -8,7 +8,9 @@ from oled import OLEDMessage
 import webUpload
 from PID import TempPID, odpid
 from pidMapping import pidMap, pidMapOD
-
+from ldr import intensity
+import os
+import sys
 
 def do_connect():
     import network
@@ -26,13 +28,13 @@ def do_connect():
 
 
 def main():
-    setLight(50000,1023)
+    setLight(50000,512)
     # Target Temperature
     targetTemp = 19.0
 
     #Target intentensity:
-    pumpBack=0
-    pumpTime=0
+    pumpState = 0
+    pumpTime = 12
 
     P = 1.2
     I = 1
@@ -48,10 +50,14 @@ def main():
     print("targetTemp: %s " %targetTemp)
 
     PIDOut, pastError= TempPID(0, 0, integralTerm, targetTemp, P, I, D)
-    #PIDOutOd, pastErrorOd = odpid(0, 0, integralTermOd, targetInten, P, I, D)
-    webUpload.pidUpload(P, I, D)
 
+    intenArr = []
+    for i in range(100):
+        intenArr.append(intensity())
 
+    targetIntensity = (sum(intenArr) / 100)*1.005
+    print("Target Intensity: ")
+    print(targetIntensity)
 
     #Setup download
     webUpload.targetTempDownload()
@@ -59,16 +65,30 @@ def main():
     webUpload.IDownload()
     webUpload.DDownload()
 
-    webUpload.targetTempUpload2(targetTemp)
+    webUpload.targetTempUpload(targetTemp)
+
+    webUpload.pUpload(P)
+    webUpload.iUpload(I)
+    webUpload.dUpload(D)
+
+
+    inten = intensity()
 
     while True:
         #Each cycle is 30 seconds
+        setLight(50000, 512)
         timed = utime.localtime()[5]
         minute = utime.localtime()[4]
+        print(utime.localtime())
         if timed % 30 == 0:
 
             #Measure
-            inten = pump.getIntensity()
+            pump.pwm(0)
+            setLight(50000, 512)
+
+            time.sleep(0.5)
+
+            inten = intensity()
             temp = getTemp()
 
 
@@ -85,8 +105,10 @@ def main():
                 # Webupload and Oled
                 OLEDMessage(temp, inten, PIDOut, pwmpump, cooler)
                 webUpload.both(temp, inten, PIDOut, pwmpump, cooler)
-            except OSError:
-                print("PID Upload Error")
+            except Exception as e:
+                print("Error: " + str(e))
+                print("Pump: " + pwmpump)
+                print("Cooler: " + cooler)
 
 
         elif timed % 15 == 0:
@@ -98,9 +120,9 @@ def main():
                 I = webUpload.IDownload2()
                 D = webUpload.DDownload2()
 
-            except OSError:
+            except OSError as e:
+                print(e)
                 print("Error in download")
-                break
 
             print("Current target temperature is: " + str(targetTemp))
             print("Current P is: " + str(P))
@@ -111,66 +133,49 @@ def main():
 
 
         if utime.localtime()[4] % 4 == 0 and timed == 20:
-            do_connect()
-            print("Refreshing...")
-            webUpload.targetTempdisconnect()
-            webUpload.PDisconnect()
-            webUpload.IDisconnect()
-            webUpload.DDisconnect()
+            try:
+                do_connect()
+                print("Refreshing...")
+                webUpload.targetTempdisconnect()
+                webUpload.PDisconnect()
+                webUpload.IDisconnect()
+                webUpload.DDisconnect()
 
-            time.sleep(1)
-            webUpload.pidUpload(P, I, D)
-            time.sleep(1)
+                time.sleep(1)
 
-            webUpload.targetTempDownload()
-            webUpload.PDownload()
-            webUpload.IDownload()
-            webUpload.DDownload()
-            print("Done \n")
+                webUpload.targetTempDownload()
+                webUpload.PDownload()
+                webUpload.IDownload()
+                webUpload.DDownload()
 
-        if minute == 1 and timed == 12:
-            print("Pump forward")
+                time.sleep(1)
+
+
+                webUpload.pUpload(P)
+                webUpload.iUpload(I)
+                webUpload.dUpload(D)
+
+                print("Done \n")
+            except Exception as e:
+                print(e)
+                print("Refreshing Error")
+
+
+        if inten > targetIntensity and pumpState == 0 and timed == pumpTime:
+            print("Transfering water from algae to mussels")
             pump.forwards()
-        if minute == 5 and timed == 12:
-            print("Pump off")
+            pumpState = 1
+        elif pumpState == 1 and timed == pumpTime:
+            print("Algae pump off")
             pump.off()
-        if minute == 6 and timed == 12:
-            print("Pump backwards")
+            pumpState = 2
+        elif pumpState == 2 and timed == pumpTime:
+            print("Transfering water from mussels to algae")
             pump.backwards()
-        if minute == 10 and timed == 12:
-            print("Pump off")
+            pumpState = 3
+        elif pumpState == 3 and timed == pumpTime:
+            print("Algae pump off")
             pump.off()
-
-        """
-        if timed % 12 == 0:
-            print("pumptime: %s" % pumpTime)
-            if pumpTime < 12:
-                if pumpBack == 0:
-                    inten=pump.getIntensity()
-                    print("Intensity" + str(inten))
-                    PIDOutOd, pastErrorOd = odpid(inten, pastErrorOd, integralTermOd, targetInten, P, I, D)
-                    integralTermOd.append(pastErrorOd)
-                    integralTermOd.pop(0)
-                    pumpTime = pidMapOD(PIDOutOd)
-                    print("PID OD: %s" % PIDOutOd)
-                    print("New pumptime: %s" % pumpTime)
-                    if pumpTime==0:
-                        pump.off()
-                    else:
-                        pump.forwards()
-                        pumpBack+=1
-                        pumpTime-=12
-
-                else:
-                    pump.backwards()
-
-                    pumpBack -= 1
-
-                    print("going back x%s" % pumpBack)
-            else:
-                pumpTime -= 12
-                pumpBack += 1
-                print("pumpback: %s" % pumpBack)
-            """
+            pumpState = 0
 
         time.sleep(1)

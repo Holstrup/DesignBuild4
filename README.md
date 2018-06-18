@@ -25,6 +25,9 @@ pip install adafruit-ampy
 
 To run the experiments on the board, simply transfer the files using ampy and begin. 
 
+## MQTT Broker
+
+We have used [Adafruit](https://io.adafruit.com) as our MQTT broker. The dashboard we ended up with can be seen [here](https://io.adafruit.com/abho/dashboards/design-build-dashboard)
 
 ## Built With
 

@@ -26,7 +26,7 @@ def pidMap(pid):
         return "60", "Low"
       
     elif pid <= -2:
-        pump.pwm(40)
+        pump.pwm(50)
         cooler.coolerLow()
         return "40", "Low"
        

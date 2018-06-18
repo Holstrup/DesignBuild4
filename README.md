@@ -39,7 +39,7 @@ To run the experiments on the board, simply transfer the files using ampy and be
 * **Abdelali Khatibi** - [Github Page](https://github.com/thecoder2297)
 
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+You can see the individual contributions at the [insights](https://github.com/Holstrup/DesignBuild4/graphs/contributors)
 
 ## Acknowledgments
 

@@ -34,24 +34,3 @@ def pidMap(pid):
         pump.pwm(0)
         cooler.coolerLow()
         return "0", "Low"
-
-
-def pidMapOD(pid):
-    #time that it takes water to run through.. can vary
-    defaultTime=12
-    if pid <= -10:
-        return (defaultTime+48)
-
-    elif pid <= -8:
-        return (defaultTime + 36)
-
-
-
-    elif pid <= -6:
-        return (defaultTime + 24)
-
-    elif pid <= -4:
-        return (defaultTime + 12)
-
-    else:
-        return (0)

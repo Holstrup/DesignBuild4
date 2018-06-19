@@ -32,18 +32,14 @@ def main():
     # Target Temperature
     targetTemp = 19.0
 
-    #Target intentensity:
-    pumpState = 0
-    pumpTime = 12
 
     P = 1.2
     I = 1
     D = 0.4
 
     # PID Parameters
-    pastError = 0
     integralTerm = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    #integralTermOd = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
 
 
     #Initial PID measures
@@ -51,13 +47,6 @@ def main():
 
     PIDOut, pastError= TempPID(0, 0, integralTerm, targetTemp, P, I, D)
 
-    intenArr = []
-    for i in range(100):
-        intenArr.append(intensity())
-
-    targetIntensity = (sum(intenArr) / 100)*1.005
-    print("Target Intensity: ")
-    print(targetIntensity)
 
     #Setup download
     webUpload.targetTempDownload()
@@ -72,15 +61,14 @@ def main():
     webUpload.dUpload(D)
 
 
-    inten = intensity()
+
 
     while True:
         #Each cycle is 30 seconds
-        setLight(50000, 512)
-        timed = utime.localtime()[5]
+        second = utime.localtime()[5]
         minute = utime.localtime()[4]
         print(utime.localtime())
-        if timed % 30 == 0:
+        if second % 30 == 0:
 
             #Measure
             pump.pwm(0)
@@ -111,7 +99,7 @@ def main():
                 print("Cooler: " + cooler)
 
 
-        elif timed % 15 == 0:
+        elif second % 15 == 0:
             print("Starting Downloads... \n")
 
             try:
@@ -132,7 +120,7 @@ def main():
             print("\n")
 
 
-        if utime.localtime()[4] % 4 == 0 and timed == 20:
+        if minute % 4 == 0 and second == 20:
             try:
                 do_connect()
                 print("Refreshing...")
@@ -159,13 +147,13 @@ def main():
                 print(e)
                 print("Refreshing Error")
 
-        if minute == 1 and timed == 12:
+        if minute == 1 and second == 12:
             pump.forwards()
-        elif minute == 3 and timed == 12:
+        elif minute == 3 and second == 12:
             pump.off()
-        elif minute == 4 and timed == 12:
+        elif minute == 4 and second == 12:
             pump.backwards()
-        elif minute == 6 and timed == 12:
+        elif minute == 6 and second == 12:
             pump.off()
 
         time.sleep(1)

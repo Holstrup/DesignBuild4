@@ -37,23 +37,6 @@ def off():
 
 
 
-def getIntensity():
-    pwmpump=forward.duty()
-    print(pwmpump)
-    if pwmpump!=1:
-        print("Stopping pump")
-        forward.duty(1)
-        print("intensity")
-        time.sleep(1)
-        inten=intensity()
-        print(inten)
-        time.sleep(0.5)
-        forward.duty(pwmpump)
-        print(forward.duty())
-
-    else:
-        inten = intensity()
-    return inten
 
 
 

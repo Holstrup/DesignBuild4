@@ -3,6 +3,12 @@ sys.path.insert(0, '/lib')
 from simple import MQTTClient
 import time
 
+
+Usr = "abho"
+AIOKey = "bbd0c066695243c2b7d30dbc94614a94"
+
+
+
 P = 1.0
 i = 1.0
 D = 0.3
@@ -13,29 +19,23 @@ def sub_cb(topic,msg):
     print("Data " + msg.decode("utf-8") + " uploaded")
 
 #Publish value
-client = MQTTClient("device_id", "io.adafruit.com", user="abho", password="bbd0c066695243c2b7d30dbc94614a94", port=1883)
+client = MQTTClient("device_id", "io.adafruit.com", user=Usr, password=AIOKey, port=1883)
 client.set_callback(sub_cb)
-
 
 
 
 def both(Temperature,intensity,PIDVal,pwmpump,cooler):
     client.connect()
-    client.subscribe(topic="abho/feeds/Temperature")
-    client.publish(topic="abho/feeds/Temperature", msg= str(Temperature))
-    print("Temp Uploaded")
-    client.subscribe(topic="abho/feeds/lightintensity")
-    client.publish(topic="abho/feeds/lightIntensity", msg=str(intensity))
-    print("Light Intensity Upload")
-    client.subscribe(topic="abho/feeds/pid")
-    client.publish(topic="abho/feeds/pid", msg= str(PIDVal))
-    print("PID Upload")
-    client.subscribe(topic="abho/feeds/cooler-pump")
-    client.publish(topic="abho/feeds/cooler-pump", msg= pwmpump)
-    print("Cooler Pump Uploaded")
-    client.subscribe(topic="abho/feeds/cooler")
-    client.publish(topic="abho/feeds/cooler", msg= cooler)
-    print("Cooler Uploaded")
+    client.subscribe(topic=Usr + "/feeds/Temperature")
+    client.publish(topic=Usr + "/feeds/Temperature", msg= str(Temperature))
+    client.subscribe(topic=Usr + "/feeds/lightintensity")
+    client.publish(topic=Usr + "/feeds/lightIntensity", msg=str(intensity))
+    client.subscribe(topic=Usr + "/feeds/pid")
+    client.publish(topic=Usr + "/feeds/pid", msg= str(PIDVal))
+    client.subscribe(topic=Usr + "/feeds/cooler-pump")
+    client.publish(topic=Usr + "/feeds/cooler-pump", msg= pwmpump)
+    client.subscribe(topic=Usr + "/feeds/cooler")
+    client.publish(topic=Usr + "/feeds/cooler", msg= cooler)
     client.disconnect()
 
 
@@ -43,12 +43,12 @@ def both(Temperature,intensity,PIDVal,pwmpump,cooler):
 #Target Temp
 def targetTempUpload(temp):
     client.connect()
-    client.subscribe(topic="abho/feeds/targettemp")
-    client.publish(topic="abho/feeds/targettemp", msg=str(temp))
+    client.subscribe(topic=Usr + "/feeds/targettemp")
+    client.publish(topic=Usr + "/feeds/targettemp", msg=str(temp))
     client.disconnect()
 
 def targetTempUpload2(temp):
-    client.publish(topic="abho/feeds/targettemp", msg=str(temp))
+    client.publish(topic=Usr + "/feeds/targettemp", msg=str(temp))
 
 
 def targetTempCallBack(topic,msg):
@@ -56,12 +56,12 @@ def targetTempCallBack(topic,msg):
     global targetTemp
     targetTemp = float(msg.decode("utf-8"))
 
-tempClient = MQTTClient("ESP32", "io.adafruit.com", user="abho", password="bbd0c066695243c2b7d30dbc94614a94", port=1883)
+tempClient = MQTTClient("ESP32", "io.adafruit.com", user=Usr, password=AIOKey, port=1883)
 tempClient.set_callback(targetTempCallBack)
 
 def targetTempDownload():
     tempClient.connect()
-    tempClient.subscribe(topic="abho/feeds/targettemp")
+    tempClient.subscribe(topic=Usr + "/feeds/targettemp")
     return targetTemp
 
 def targetTempDownload2():
@@ -79,12 +79,12 @@ def PCallBack(topic,msg):
     global P
     P = float(msg.decode("utf-8"))
 
-pclient = MQTTClient("PValue", "io.adafruit.com", user="abho", password="bbd0c066695243c2b7d30dbc94614a94", port=1883)
+pclient = MQTTClient("PValue", "io.adafruit.com", user=Usr, password=AIOKey, port=1883)
 pclient.set_callback(PCallBack)
 
 def PDownload():
     pclient.connect()
-    pclient.subscribe(topic="abho/feeds/pparameter")
+    pclient.subscribe(topic=Usr + "/feeds/pparameter")
     return P
 
 def PDownload2():
@@ -102,12 +102,12 @@ def ICallBack(topic,msg):
     global i
     i = float(msg.decode("utf-8"))
 
-iclient = MQTTClient("IValue", "io.adafruit.com", user="abho", password="bbd0c066695243c2b7d30dbc94614a94", port=1883)
+iclient = MQTTClient("IValue", "io.adafruit.com", user=Usr, password=AIOKey, port=1883)
 iclient.set_callback(ICallBack)
 
 def IDownload():
     iclient.connect()
-    iclient.subscribe(topic="abho/feeds/iparameter")
+    iclient.subscribe(topic=Usr + "/feeds/iparameter")
     return i
 
 def IDownload2():
@@ -125,12 +125,12 @@ def DCallBack(topic,msg):
     global D
     D = float(msg.decode("utf-8"))
 
-dclient = MQTTClient("DValue", "io.adafruit.com", user="abho", password="bbd0c066695243c2b7d30dbc94614a94", port=1883)
+dclient = MQTTClient("DValue", "io.adafruit.com", user=Usr, password=AIOKey, port=1883)
 dclient.set_callback(DCallBack)
 
 def DDownload():
     dclient.connect()
-    dclient.subscribe(topic="abho/feeds/dparameter")
+    dclient.subscribe(topic=Usr + "/feeds/dparameter")
     return D
 
 def DDownload2():
@@ -145,14 +145,14 @@ def DDisconnect():
 #PID Upload
 
 def pUpload(Ppara):
-    pclient.subscribe(topic="abho/feeds/pparameter")
-    pclient.publish(topic="abho/feeds/pparameter", msg=str(Ppara))
+    pclient.subscribe(topic=Usr + "/feeds/pparameter")
+    pclient.publish(topic=Usr + "/feeds/pparameter", msg=str(Ppara))
 
 
 def iUpload(Ipara):
-    iclient.subscribe(topic="abho/feeds/iparameter")
-    iclient.publish(topic="abho/feeds/iparameter", msg=str(Ipara))
+    iclient.subscribe(topic=Usr + "/feeds/iparameter")
+    iclient.publish(topic=Usr + "/feeds/iparameter", msg=str(Ipara))
 
 def dUpload(Dpara):
-    dclient.subscribe(topic="abho/feeds/dparameter")
-    dclient.publish(topic="abho/feeds/dparameter", msg=str(Dpara))
+    dclient.subscribe(topic=Usr + "/feeds/dparameter")
+    dclient.publish(topic=Usr + "/feeds/dparameter", msg=str(Dpara))

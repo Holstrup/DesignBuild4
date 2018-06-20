@@ -6,7 +6,6 @@ import time
 def pidMap(pid):
     if pid <= -10:
         pump.pwm(100)
-
         cooler.coolerHigh()
         return "100","High"
     

@@ -46,4 +46,4 @@ You can see the individual contributions at the [insights](https://github.com/Ho
 
 ## Acknowledgments
 
-Thanks to Giorgi and Mr. Ph.D Luca for helping us out
+Thanks to Georgi and Mr. Ph.D Luca for helping us out
